@@ -1,0 +1,7 @@
+server:
+  servlet:
+    context-path: /gerenciador-de-pessoas/api
+
+springdoc:
+  swagger-ui:
+    path: /public/swagger
