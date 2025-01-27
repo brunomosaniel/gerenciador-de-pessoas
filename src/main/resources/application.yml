@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /gerenciador-de-pessoas/api
+    context-path: /gerenciador/api
 
 springdoc:
   swagger-ui:
