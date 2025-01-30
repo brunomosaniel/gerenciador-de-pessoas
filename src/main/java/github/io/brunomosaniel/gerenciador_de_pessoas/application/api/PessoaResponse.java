@@ -1,4 +1,4 @@
-package github.io.brunomosaniel.gerenciador_de_pessoas.application;
+package github.io.brunomosaniel.gerenciador_de_pessoas.application.api;
 
 import lombok.Builder;
 import lombok.Value;

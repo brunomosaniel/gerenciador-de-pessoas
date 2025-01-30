@@ -1,4 +1,4 @@
-package github.io.brunomosaniel.gerenciador_de_pessoas.application;
+package github.io.brunomosaniel.gerenciador_de_pessoas.application.api;
 
 import github.io.brunomosaniel.gerenciador_de_pessoas.application.service.PessoaService;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +31,14 @@ public class PessoaController implements PessoaAPI {
     }
 
     @Override
-    public void deletaPessoasAtravesId(UUID idPessoas) {
-        pessoaService.deletaPessoasAtravesId(idPessoas);
+    public void deletaPessoasAtravesId(UUID idPessoa) {
+        pessoaService.deletaPessoasAtravesId(idPessoa);
     }
+
+    @Override
+    public void PatchPessoa(UUID idPessoa, PatchPessoaRequest patchPessoaRequest) {
+        pessoaService.patchAlteraPessoa(idPessoa, patchPessoaRequest);
+    }
+
 
 }

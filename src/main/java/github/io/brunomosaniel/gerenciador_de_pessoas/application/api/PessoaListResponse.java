@@ -1,4 +1,4 @@
-package github.io.brunomosaniel.gerenciador_de_pessoas.application;
+package github.io.brunomosaniel.gerenciador_de_pessoas.application.api;
 
 import github.io.brunomosaniel.gerenciador_de_pessoas.domain.Pessoa;
 import lombok.Value;
@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 @Value
 public class PessoaListResponse {
     private UUID id;
+    private String email;
+    private String senha;
     private String dataNascimento;
     private String nomeCompleto;
 
@@ -23,5 +25,7 @@ public class PessoaListResponse {
         this.id = pessoa.getId();
         this.dataNascimento = pessoa.getDataNascimento();
         this.nomeCompleto = pessoa.getNomeCompleto();
+        this.senha = pessoa.getSenha();
+        this.email = pessoa.getEmail();
     }
 }

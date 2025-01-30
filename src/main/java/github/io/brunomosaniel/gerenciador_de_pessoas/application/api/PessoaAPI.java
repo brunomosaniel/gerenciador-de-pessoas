@@ -1,4 +1,4 @@
-package github.io.brunomosaniel.gerenciador_de_pessoas.application;
+package github.io.brunomosaniel.gerenciador_de_pessoas.application.api;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -25,5 +25,9 @@ public interface PessoaAPI {
 
     @DeleteMapping(value = "/{idPessoa}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    void deletaPessoasAtravesId (@PathVariable UUID idPessoas);
+    void deletaPessoasAtravesId (@PathVariable UUID idPessoa);
+
+    @PatchMapping(value = "/{idPessoa}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void PatchPessoa (UUID idPessoa, @Valid @RequestBody PatchPessoaRequest patchPessoaRequest);
 }

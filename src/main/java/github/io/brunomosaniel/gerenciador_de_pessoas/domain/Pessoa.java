@@ -1,6 +1,7 @@
 package github.io.brunomosaniel.gerenciador_de_pessoas.domain;
 
-import github.io.brunomosaniel.gerenciador_de_pessoas.application.PessoaRequest;
+import github.io.brunomosaniel.gerenciador_de_pessoas.application.api.PatchPessoaRequest;
+import github.io.brunomosaniel.gerenciador_de_pessoas.application.api.PessoaRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,13 +19,27 @@ public class Pessoa {
     @Column(columnDefinition = "uuid", name = "idPessoas", updatable = false, unique = true, nullable = false)
    private UUID id;
    private String dataNascimento;
+   private String email;
+   private String senha;
    private String nomeCompleto;
 
    private LocalDateTime dataHoraDoCadastro;
+   private LocalDateTime getDataHoraUltimaAlteracao;
 
     public Pessoa(PessoaRequest pessoaRequest) {
         this.dataNascimento =  pessoaRequest.getDataNascimento();
         this.nomeCompleto = pessoaRequest.getNomeCompleto();
+        this.senha = pessoaRequest.getSenha();
+        this.email = pessoaRequest.getEmail();
         this.dataHoraDoCadastro = LocalDateTime.now();
+    }
+
+    public void altera(PatchPessoaRequest patchPessoaRequest) {
+        this.dataNascimento = patchPessoaRequest.getDataNascimento();
+        this.nomeCompleto = patchPessoaRequest.getNomeCompleto();
+        this.email = patchPessoaRequest.getEmail();
+        this.senha = patchPessoaRequest.getSenha();
+        this.getDataHoraUltimaAlteracao = LocalDateTime.now();
+
     }
 }
