@@ -1,7 +1,7 @@
 server:
   servlet:
-    context-path: /gerenciador/api
+    context-path: /gerenciador/api # Define o contexto base da API
 
 springdoc:
   swagger-ui:
-    path: /public/swagger
+    path: /public/swagger # Caminho para acessar o Swagger UI

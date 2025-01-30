@@ -1,17 +1,16 @@
 package github.io.brunomosaniel.gerenciador_de_pessoas.application.service;
 
-import github.io.brunomosaniel.gerenciador_de_pessoas.application.PessoaDetalhadoResponse;
-import github.io.brunomosaniel.gerenciador_de_pessoas.application.PessoaListResponse;
-import github.io.brunomosaniel.gerenciador_de_pessoas.application.PessoaRequest;
-import github.io.brunomosaniel.gerenciador_de_pessoas.application.PessoaResponse;
+import github.io.brunomosaniel.gerenciador_de_pessoas.application.api.*;
 import github.io.brunomosaniel.gerenciador_de_pessoas.application.repository.PessoaRepository;
 import github.io.brunomosaniel.gerenciador_de_pessoas.domain.Pessoa;
-import lombok.NoArgsConstructor;
+import github.io.brunomosaniel.gerenciador_de_pessoas.handler.APIException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,11 +22,17 @@ public class PessoaApplicationService implements PessoaService {
     @Override
     public PessoaResponse criaPessoa(PessoaRequest pessoaRequest) {
         log.info("[start] PessoaApplicationService - criaPessoa");
-      Pessoa pessoa = pessoaRepository.salva(new Pessoa(pessoaRequest));
+        Pessoa pessoa = pessoaRepository.salva(toPessoa(pessoaRequest));
+        PessoaResponse response = Optional.ofNullable(pessoa)
+                .map(p -> PessoaResponse.builder()
+                        .id(p.getId())
+                        .build())
+                .orElseThrow(() -> new IllegalStateException("Erro ao salvar pessoa"));
         log.info("[finish] PessoaApplicationService - criaPessoa");
-        return PessoaResponse.builder()
-                .id(pessoa.getId())
-                .build();
+        return response;
+    }
+    private Pessoa toPessoa(PessoaRequest pessoaRequest) {
+        return new Pessoa(pessoaRequest);
     }
 
     @Override
@@ -41,7 +46,7 @@ public class PessoaApplicationService implements PessoaService {
     @Override
     public PessoaDetalhadoResponse buscaPessoaPorId(UUID idPessoa) {
         log.info("[start] PessoaApplicationService - buscaPessoaPorId");
-        log.info("[idPessoa]", idPessoa);
+        log.info("[idPessoa] {}", idPessoa);
         var pessoa = pessoaRepository.buscaPessoaPorId(idPessoa);
         log.info("[finish] PessoaApplicationService - buscaPessoaPorId");
         return new PessoaDetalhadoResponse(pessoa);
@@ -50,8 +55,18 @@ public class PessoaApplicationService implements PessoaService {
     @Override
     public void deletaPessoasAtravesId(UUID idPessoa) {
         log.info("[start] PessoaApplicationService - deletaPessoasAtravesId");
-        log.info("[idPessoa]", idPessoa);
+        log.info("[idPessoa] {}" , idPessoa);
         var pessoa = pessoaRepository.buscaPessoaPorId(idPessoa);
         log.info("[start] PessoaApplicationService - deletaPessoasAtravesId");
+    }
+
+    @Override
+    public void patchAlteraPessoa(UUID idPessoa, PatchPessoaRequest patchPessoaRequest) {
+        log.info("[start] PessoaApplicationService - patchAlteraPessoa");
+        log.info("[idPessoa] {}" , idPessoa);
+        var pessoa = pessoaRepository.buscaPessoaPorId(idPessoa);
+        pessoa.altera(patchPessoaRequest);
+        pessoaRepository.salva(pessoa);
+        log.info("[finish] PessoaApplicationService - patchAlteraPessoa");
     }
 }

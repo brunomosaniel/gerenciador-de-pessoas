@@ -1,11 +1,12 @@
-package github.io.brunomosaniel.gerenciador_de_pessoas.application;
+package github.io.brunomosaniel.gerenciador_de_pessoas.application.api;
 
 
-import jakarta.validation.Valid;
 import lombok.Value;
 
 @Value
 public class PessoaRequest {
+    private String email;
+    private String senha;
     private String dataNascimento;
     private String nomeCompleto;
 }

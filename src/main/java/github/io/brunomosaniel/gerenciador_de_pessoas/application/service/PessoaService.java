@@ -1,9 +1,6 @@
 package github.io.brunomosaniel.gerenciador_de_pessoas.application.service;
 
-import github.io.brunomosaniel.gerenciador_de_pessoas.application.PessoaDetalhadoResponse;
-import github.io.brunomosaniel.gerenciador_de_pessoas.application.PessoaListResponse;
-import github.io.brunomosaniel.gerenciador_de_pessoas.application.PessoaRequest;
-import github.io.brunomosaniel.gerenciador_de_pessoas.application.PessoaResponse;
+import github.io.brunomosaniel.gerenciador_de_pessoas.application.api.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,4 +10,5 @@ public interface PessoaService {
     List<PessoaListResponse> getTodasPessoas();
     PessoaDetalhadoResponse buscaPessoaPorId(UUID idPessoa);
     void deletaPessoasAtravesId(UUID idPessoas);
+    void patchAlteraPessoa(UUID idPessoas, PatchPessoaRequest patchPessoaRequest);
 }
